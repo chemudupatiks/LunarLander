@@ -1,20 +1,28 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 26 21:02:50 2020
+# plot.py 
+# Creates all the plots.
 
-@author: ckris
-"""
 import numpy as np 
 import re
 import matplotlib.pyplot as plt
 
+
 def read_plain_numbers(filename):
+    """
+    Reads the rewards stored in file, and returns a numpy array
+    Args:
+    filename -- name of the file (str) 
+    """
     with open(filename) as f:
         lines = f.readlines()
         rewards = np.array(lines, dtype=float)
         return rewards
     
 def read_output_txt(filename):
+    """
+    Reads the rewards stored in file, and returns a numpy array
+    Args:
+    filename -- name of the file (str) 
+    """
     with open(filename) as f:
         lines = f.readlines()
         rewards = []
@@ -24,8 +32,10 @@ def read_output_txt(filename):
                 rewards.append(reward_match[0])
         return np.array(rewards, dtype=float)
     
+# Numpy array of episode numbers [1, ..., 750]
 episodes = np.arange(750)+1
 
+# Plot Rewards vs Episode for varying learning rates 
 rewards_lr_0_0005 = read_output_txt("rewards_lr_0_0005.txt")
 rewards_lr_0_001 = read_plain_numbers("rewards_lr_0_001")
 rewards_lr_0_01 = read_plain_numbers("rewards_lr_0_01")
@@ -41,7 +51,7 @@ plt.title("rewards with varying learning rates")
 plt.show()
 
 
-
+# Plot Rewards vs Episode for varying epsilon_decay values
 rewards_eps_decay_0_9 = read_output_txt("rewards_eps_decay_0_9.txt")
 rewards_eps_decay_0_99 = read_output_txt("rewards_eps_decay_0_99.txt")
 rewards_eps_decay_0_995 = rewards_lr_0_001
@@ -57,6 +67,7 @@ plt.title("rewards with varying epsilon decay")
 plt.show()
 
 
+# Plot Rewards vs Episode for varying architectures
 rewards_shallow_arch = read_plain_numbers("rewards_shallow_arch.txt")
 rewards_deep_arch = rewards_lr_0_001
 
@@ -69,6 +80,8 @@ plt.legend()
 plt.title("rewards with shallow architecture vs deep architecture")
 plt.show()
 
+
+# Plot Rewards vs Episode for varying C (Update target model weights with model weights)
 rewards_C_1 = read_output_txt("rewards_C_1.txt")
 rewards_C_4 = rewards_lr_0_001
 rewards_C_16 = read_output_txt("rewards_C_16.txt")
@@ -83,6 +96,8 @@ plt.legend()
 plt.title("rewards with varying C")
 plt.show()
 
+
+# Plot Rewards vs Episode for varying gamma values
 rewards_gamma_0_9 = read_output_txt("rewards_gamma_0_9.txt")
 rewards_gamma_0_99 = rewards_lr_0_001
 rewards_gamma_0_999 = read_plain_numbers("rewards_per_gamma_0_999.txt")
