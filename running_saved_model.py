@@ -53,7 +53,7 @@ for episode in range(episodes):
 env.close()
 
 # Make the reward vs episode_number plot
-plt.plot(total_rewards, episode_nums)
+plt.plot(episode_nums, total_rewards)
 plt.ylabel("reward")
 plt.xlabel("episode number")
 plt.show()
